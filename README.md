@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 와이즐리 클론 코딩
 
-## Getting Started
+## 기존 서비스 분석
 
-First, run the development server:
+- 성능 측정(lighthouse)
+- 개선 가능 요소 파악
+- 프론트 아키텍처 분석
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 성능 측정
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### Lighthouse
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- FCP 2.6초
+- LCP 4.1초
+- Total Blocking Time 690밀리초
+- Cumulative Layout Shift 0.425
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 개발자 도구 성능 패널
 
-## Learn More
+- render blocking 요소
 
-To learn more about Next.js, take a look at the following resources:
+  - js 파일
+    - cdn.jsdelivr
+    - cid.generate
+    - swiper
+    - i18n
+  - css 파일
+    - optimizer
+    - swiper-bundle.css
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- layout Shift 요소
+  - 아이템 섹션 (swiper)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 프론트 아키텍처 분석
 
-## Deploy on Vercel
+- 카페 24 기반
+- 라이브러리
+  - swiper (캐러셀)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 클론 프로젝트
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 아키텍처
+- 성능 악영향 요소 개선
+
+### 성능 악영향 요소 개선
+
+- layout shift
+  swiper js가 로드된 후, html 문서를 확인하여 각 요소에 스타일을 주입하는 방식으로 동작하고 있음
+  이로 인해, 서버 사이드에서 렌더링된 페이지에 대해 layoutShift가 발생함.
+
+  - layout shift가 발생하는 케이스에 따라, shift가 발생하지 않도록 크기를 고정값으로 부여하는 방법

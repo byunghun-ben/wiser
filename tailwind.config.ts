@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        primary: "var(--primary)",
       },
       fontSize: {
         xxs: ["0.625rem", { lineHeight: "0.75rem" }],

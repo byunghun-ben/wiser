@@ -1,26 +1,33 @@
 import MainItemSection from "@/components/MainItemSection";
 import BannerSlider from "@/components/swiper/BannerSlider";
-import CategorySlider from "@/components/swiper/CategorySlider";
-import { CATEGORY_BEST, RECOMMEND_ITEMS } from "@/data/dummy-data";
+import { CATEGORY_BEST } from "@/data/dummy-data";
 import { StarIcon } from "@heroicons/react/16/solid";
 import { ShoppingCartIcon, WindowIcon } from "@heroicons/react/24/outline";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 
+const CategorySlider = dynamic(
+  () => import("@/components/swiper/CategorySlider"),
+  {
+    ssr: false,
+  }
+);
+
 export default function Home() {
   return (
-    <div className="h-dvh bg-black/5 max-w-[560px] mx-auto">
-      <main className="bg-black/5">
+    <div className="h-dvh max-w-[560px] mx-auto">
+      <main className="">
         {/* 배너 - 1 */}
-        <div className="bg-black/5">
-          <p>100원에 전상품 원가로 구매하려 가기 {">"}</p>
+        <div className="flex items-center justify-center py-2 bg-blue-800 text-white font-bold">
+          <p>100원에 전상품 원가로 구매하러 가기 {">"}</p>
         </div>
 
-        <div className="bg-black/5 flex items-center h-14 px-3 bg-[#0077ED] text-white">
+        <div className=" flex items-center h-14 px-3 bg-[#0077ED] text-white">
           <Link href="/" className="flex-none">
             <WindowIcon className="size-6" />
           </Link>
-          <span className="flex-1 text-center text-sm">
+          <span className="flex-1 text-center font-bold">
             최고의 가성비가 아니면 팔지 않습니다.
           </span>
           <Link href="/order/basket" className="flex-none">
@@ -67,117 +74,13 @@ export default function Home() {
         </div>
 
         {/* 섹션 1 - 와이즐리 추천템 */}
-        <MainItemSection />
+        <MainItemSection label="와이즐리 추천템" />
 
         {/* 섹션 2 - 니치향수 & 디퓨저 출시 */}
-        <section className="bg-black/5">
-          <div className="flex items-center">
-            <h2 className="flex-1 text-lg font-bold">와이즐리 추천템</h2>
-            <Link href="/" className="text-sm">
-              전체보기 {">"}
-            </Link>
-          </div>
-
-          {/* 상품 */}
-          <div className="overflow-x-auto">
-            <div className="flex gap-3">
-              {RECOMMEND_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex-none w-5/12 h-72 flex flex-col bg-white rounded-md"
-                >
-                  <div className="h-40 relative">
-                    <Image
-                      src={item.thumbnail}
-                      alt={item.title}
-                      fill
-                      sizes="33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-2">
-                    <div className="flex items-center gap-1">
-                      {item.tags.map((tag, index) => (
-                        <span key={index} className="text-xs text-red-500">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 className="text-sm line-clamp-2">{item.title}</h3>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm line-through text-gray-500">
-                        {item.originalPrice.toLocaleString()}원
-                      </span>
-                      <span className="text-sm text-red-500">
-                        {item.salePrice.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm text-red-500">
-                        {item.review}점 ({item.reviewCount})
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <MainItemSection label="니치향수 & 디퓨저 출시" />
 
         {/* 섹션 3 - 생활용품도 와이즐리에서 */}
-        <section className="bg-black/5">
-          <div className="flex items-center">
-            <h2 className="flex-1 text-lg font-bold">와이즐리 추천템</h2>
-            <Link href="/" className="text-sm">
-              전체보기 {">"}
-            </Link>
-          </div>
-
-          {/* 상품 */}
-          <div className="overflow-x-auto">
-            <div className="flex gap-3">
-              {RECOMMEND_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex-none w-5/12 h-72 flex flex-col bg-white rounded-md"
-                >
-                  <div className="h-40 relative">
-                    <Image
-                      src={item.thumbnail}
-                      alt={item.title}
-                      fill
-                      sizes="33vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-2">
-                    <div className="flex items-center gap-1">
-                      {item.tags.map((tag, index) => (
-                        <span key={index} className="text-xs text-red-500">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <h3 className="text-sm line-clamp-2">{item.title}</h3>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm line-through text-gray-500">
-                        {item.originalPrice.toLocaleString()}원
-                      </span>
-                      <span className="text-sm text-red-500">
-                        {item.salePrice.toLocaleString()}원
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span className="text-sm text-red-500">
-                        {item.review}점 ({item.reviewCount})
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <MainItemSection label="생활용품도 와이즐리에서" />
 
         {/* 중간 배너 */}
         <div className="w-full py-10">

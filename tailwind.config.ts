@@ -12,6 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontSize: {
+        xxs: ["0.625rem", { lineHeight: "0.75rem" }],
+      },
     },
   },
   plugins: [],
